@@ -19,8 +19,6 @@ export default () => {
     if (!inputValue) {
       return
     }
-    // @ts-ignore
-    if (window?.umami) umami.trackEvent('chat_generate')
     inputRef.value = ''
     setMessageList([
       ...messageList(),

@@ -6,6 +6,7 @@ import Generator from '../components/Generator'
 import '../message.css'
 import 'katex/dist/katex.min.css'
 import 'highlight.js/styles/atom-one-dark.css'
+import './style/button.css'
 ---
 
 <Layout title="ChatGPT - 旺脉">
@@ -13,5 +14,59 @@ import 'highlight.js/styles/atom-one-dark.css'
     <Header />
     <Generator client:load />
     <Footer />
+    <dialog id="dialog">
+      <span style="font-size: 12px;">输入密码</span>
+      <input type="password" id="passwordId" style="border: 1px solid gray;border-radius: 3px;" />
+      <button id="closeBtn" class="button-tiny button button-glow button-rounded button-raised button-primary" style="font-size: 12px;">确认</button>
+    </dialog>
   </main>
 </Layout>
+<style>
+  dialog {
+    width: 350px;
+    height: 60px;
+    border-radius: 8px;
+  }
+  dialog::backdrop {
+    background-color: rgba(126, 201, 236, 0.6);
+  }
+</style>
+<script>
+  (function () {
+    const isPassword = sessionStorage.getItem('password')
+    if (isPassword) {
+      return
+    }
+    const dialog = document.getElementById("dialog");
+    dialog.showModal();
+    dialog.show();
+    // 给关闭弹窗按钮绑定事件
+    const closeBtn = document.getElementById("closeBtn");
+    closeBtn.addEventListener("click", () => {
+      const passwordText = document.getElementById("passwordId")
+
+      if (passwordText.value === 'adwangmai') {
+        sessionStorage.setItem('password', passwordText.value)
+        dialog.close();
+      } else {
+
+      }
+      document.onkeydown = function(event) {
+        if (event.keyCode === 27) {
+          debugger
+          // Esc key code
+          // Do something here
+          const passwordText = document.getElementById("passwordId")
+          if (passwordText.value === 'adwangmai') {
+            dialog.close();
+          } else {
+            setTimeout(() => {
+              dialog.show();
+              dialog.showModel()
+            })
+          }
+        }
+      };
+    });
+  })();
+</script>
