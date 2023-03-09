@@ -1,6 +1,7 @@
 import type { ChatMessage } from '@/types'
 import { createSignal, Index, Show } from 'solid-js'
 import IconClear from './icons/Clear'
+import IconSend from './icons/Send'
 import MessageItem from './MessageItem'
 import SystemRoleSettings from './SystemRoleSettings'
 import { generateSignature } from '@/utils/auth'
@@ -143,13 +144,13 @@ export default () => {
 
   return (
     <div my-6>
-      <SystemRoleSettings
-        canEdit={() => messageList().length === 0}
-        systemRoleEditing={systemRoleEditing}
-        setSystemRoleEditing={setSystemRoleEditing}
-        currentSystemRoleSettings={currentSystemRoleSettings}
-        setCurrentSystemRoleSettings={setCurrentSystemRoleSettings}
-      />
+      {/*<SystemRoleSettings*/}
+      {/*  canEdit={() => messageList().length === 0}*/}
+      {/*  systemRoleEditing={systemRoleEditing}*/}
+      {/*  setSystemRoleEditing={setSystemRoleEditing}*/}
+      {/*  currentSystemRoleSettings={currentSystemRoleSettings}*/}
+      {/*  setCurrentSystemRoleSettings={setCurrentSystemRoleSettings}*/}
+      {/*/>*/}
       <Index each={messageList()}>
         {(message, index) => (
           <MessageItem
@@ -170,8 +171,8 @@ export default () => {
         when={!loading()}
         fallback={() => (
           <div class="h-12 my-4 flex gap-4 items-center justify-center bg-slate bg-op-15 text-slate rounded-sm">
-            <span>AI is thinking...</span>
-            <div class="px-2 py-0.5 border border-slate text-slate rounded-md text-sm op-70 cursor-pointer hover:bg-slate/10" onClick={stopStreamFetch}>Stop</div>
+            <span>AI正在思考...</span>
+            <div class="px-2 py-0.5 border border-slate text-slate rounded-md text-sm op-70 cursor-pointer hover:bg-slate/10" onClick={stopStreamFetch}>停止</div>
           </div>
         )}
       >
@@ -180,7 +181,7 @@ export default () => {
             ref={inputRef!}
             disabled={systemRoleEditing()}
             onKeyDown={handleKeydown}
-            placeholder="Enter something..."
+            placeholder="请输入问题..."
             autocomplete="off"
             autofocus
             onInput={() => {
@@ -205,7 +206,7 @@ export default () => {
             scroll-pa-8px
           />
           <button onClick={handleButtonClick} disabled={systemRoleEditing()} h-12 px-4 py-2 bg-slate bg-op-15 hover:bg-op-20 text-slate rounded-sm>
-            Send
+            <IconSend />
           </button>
           <button title="Clear" onClick={clear} disabled={systemRoleEditing()} h-12 px-4 py-2 bg-slate bg-op-15 hover:bg-op-20 text-slate rounded-sm>
             <IconClear />
