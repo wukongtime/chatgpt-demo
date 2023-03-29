@@ -9,11 +9,12 @@ import IconRefresh from './icons/Refresh'
 interface Props {
   role: ChatMessage['role']
   message: Accessor<string> | string
+  index?: Accessor<Number> | number
   showRetry?: Accessor<boolean>
   onRetry?: () => void
 }
 
-export default ({ role, message, showRetry, onRetry }: Props) => {
+export default ({ role, message, index, showRetry, onRetry }: Props) => {
   const roleClass = {
     system: 'bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300',
     user: 'bg-gradient-to-r from-purple-400 to-yellow-400',
@@ -25,7 +26,13 @@ export default ({ role, message, showRetry, onRetry }: Props) => {
     if (typeof message === 'function') {
       return md.render(message())
     } else if (typeof message === 'string') {
-      return md.render(message)
+      if (index === 0) {
+        let newString = message.replace('你是一个广告投放优化师，基于商品"', '')
+        let resultString = newString.replace('"，撰写5个新广告文案，每个文案控制在中文长度10个字以内，不要有标点符号，文案内容要有创意，能吸引人点击', '')
+        return md.render(resultString)
+      } else {
+        return md.render(message)
+      }
     }
     return ''
   }
@@ -35,14 +42,6 @@ export default ({ role, message, showRetry, onRetry }: Props) => {
         <div class={`shrink-0 w-7 h-7 mt-4 rounded-full op-80 ${roleClass[role]}`}></div>
         <div class="message prose text-slate break-words overflow-hidden" innerHTML={htmlString()} />
       </div>
-      { showRetry?.() && onRetry && (
-        <div class="flex items-center justify-end px-3 mb-2">
-          <div onClick={onRetry} class="flex items-center gap-1 px-2 py-0.5 op-70 border border-slate text-slate rounded-md text-sm cursor-pointer hover:bg-slate/10">
-            <IconRefresh />
-            <span>重新回答</span>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
