@@ -27,8 +27,8 @@ export default ({ role, message, index, showRetry, onRetry }: Props) => {
       return md.render(message())
     } else if (typeof message === 'string') {
       if (index === 0) {
-        let newString = message.replace('你是一个广告投放优化师，基于商品"', '')
-        let resultString = newString.replace('"，撰写5个新广告文案，每个文案控制在中文长度10个字以内，不要有标点符号，文案内容要有创意，能吸引人点击', '')
+        let newString = message.replace('你是一个广告投放优化师，基于品牌广告主的商品"', '')
+        let resultString = newString.replace('"，撰写广告文案，文案用于投放APP的开屏广告，因此文案内容要有创意，文字优美，朗朗上口，能吸引人点击。请生成5个广告文案，每个文案控制在中文长度20个字以内', '')
         return md.render(resultString)
       } else {
         return md.render(message)
